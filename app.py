@@ -102,11 +102,6 @@ def check_container():
 # --- ROUTE: CONTAINER List ---
 
 from services.container_service import get_container_list, get_shipping_lines
-from flask import redirect
-
-@app.route('/')
-def home():
-    return redirect('/list')
 
 @app.route('/list')
 def container_list():
@@ -126,12 +121,6 @@ def container_list():
         lines=lines
     )
 # --- ROUTE: CONTAINER OUT ---
-from flask import redirect
-
-@app.route('/')
-def home():
-    return redirect('/list')
-
 
 @app.route('/out', methods=['GET', 'POST'])
 def container_out():
@@ -174,11 +163,6 @@ def container_history():
         lines=[]
     )
 # --- ROUTE:  export ---
-from flask import redirect
-
-@app.route('/')
-def home():
-    return redirect('/list')
 
 @app.route('/export')
 def export_excel():
@@ -344,11 +328,6 @@ def export_excel():
         mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 # --- ROUTE:  edit ---
-from flask import redirect
-
-@app.route('/')
-def home():
-    return redirect('/list')
 
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_container(id):
@@ -409,11 +388,6 @@ def edit_container(id):
     # --- GET ---
     return render_template('edit.html', c=container)
 # --- ROUTE:  logs ---
-from flask import redirect
-
-@app.route('/')
-def home():
-    return redirect('/list')
 
 @app.route('/logs')
 def view_logs():
@@ -427,11 +401,6 @@ def view_logs():
 
     return render_template('logs.html', logs=logs)
 # --- ROUTE:  dashboad ---
-from flask import redirect
-
-@app.route('/')
-def home():
-    return redirect('/list')
 
 @app.route('/dashboard')
 def dashboard():
@@ -483,11 +452,6 @@ def dashboard():
         over_15=over_15
     )
 # --- ROUTE:  Hãng tàu/ add ---
-from flask import redirect
-
-@app.route('/')
-def home():
-    return redirect('/list')
 
 @app.route('/shipping_lines', methods=['GET', 'POST'])
 def shipping_lines():
@@ -531,11 +495,6 @@ def shipping_lines():
 
     return render_template('shipping_lines.html', lines=lines)
 # --- ROUTE:  Hãng tàu/edit ---
-from flask import redirect
-
-@app.route('/')
-def home():
-    return redirect('/list')
 
 @app.route('/shipping_lines/edit/<code>', methods=['GET', 'POST'])
 def edit_shipping_line(code):
@@ -570,11 +529,6 @@ def edit_shipping_line(code):
 
     return render_template('edit_shipping_line.html', line=line)
 # --- ROUTE:  Hãng tàu/delete ---
-from flask import redirect
-
-@app.route('/')
-def home():
-    return redirect('/list')
 
 @app.route('/shipping_lines/delete/<code>')
 def delete_shipping_line(code):
