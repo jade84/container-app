@@ -159,11 +159,6 @@ def container_out():
     return render_template('out.html', data=data)
 # --- ROUTE:  history ---
 from services.container_service import get_container_history
-from flask import redirect
-
-@app.route('/')
-def home():
-    return redirect('/list')
 
 @app.route('/history')
 def container_history():
