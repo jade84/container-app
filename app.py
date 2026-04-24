@@ -150,3 +150,16 @@ def container_history():
         line=None,
         lines=[]
     )
+
+# ===== HISTORY =====
+@app.route('/logs')
+def view_logs():
+    logs = query_all("""
+        SELECT 
+            l.*, c.container_no
+        FROM container_logs l
+        LEFT JOIN containers c ON l.container_id = c.id
+        ORDER BY l.created_at DESC
+    """)
+
+    return render_template('logs.html', logs=logs)
