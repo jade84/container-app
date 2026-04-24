@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+<div>
+        <a href="/in">Nhập (IN)</a> |
+        <a href="/out">Xuất (OUT)</a> |
+        <a href="/list">Tồn bãi</a> |
+        <a href="/history">Xuất bãi</a> |
+        <a href="/logs">Log chỉnh sửa</a>
+        
+</div>
+    <hr>
+
+<h2>Dashboard</h2>
+
+<h3>Tổng container: {{ total }}</h3>
+
+<h3>Cảnh báo</h3>
+<ul>
+    <li>> 7 ngày: {{ over_7 }}</li>
+    <li>> 15 ngày: {{ over_15 }}</li>
+</ul>
+
+<h3>Theo hãng tàu</h3>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Shipping Line</th>
+        <th>Số lượng</th>
+    </tr>
+
+    {% for row in by_line %}
+    <tr>
+        <td>{{ row.shipping_line }}</td>
+        <td>{{ row.count }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

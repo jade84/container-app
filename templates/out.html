@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Xuất Container</title>
+</head>
+<body>
+
+<div>
+    <a href="/in">Nhập (IN)</a> |
+    <a href="/out">Xuất (OUT)</a> |
+    <a href="/list">Tồn bãi</a> |
+    <a href="/history">Xuất bãi</a> |
+    <a href="/logs">Log chỉnh sửa</a>
+</div>
+
+<hr>
+
+<h2>Xuất Container</h2>
+
+<!-- 🔍 FORM TÌM -->
+<form method="POST">
+    Container No:
+    <input type="text" name="container_no"
+           value="{{ data.container_no if data else '' }}">
+    <button type="submit">Tìm</button>
+</form>
+
+<!-- ❌ ERROR -->
+{% if error %}
+<p style="color:red">{{ error }}</p>
+{% endif %}
+
+<!-- ✅ SUCCESS -->
+{% if success %}
+<p style="color:green">{{ success }}</p>
+{% endif %}
+
+<!-- 📦 THÔNG TIN -->
+{% if data %}
+
+<h3>Thông tin container</h3>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Container No</th>
+        <th>Shipping Line</th>
+        <th>Size</th>
+        <th>Status</th>
+    </tr>
+    <tr>
+        <td>{{ data.container_no }}</td>
+        <td>{{ data.shipping_line }}</td>
+        <td>{{ data.size }}</td>
+        <td>{{ data.status }}</td>
+    </tr>
+</table>
+
+<!-- 🚚 FORM XUẤT -->
+<h3>Xuất container</h3>
+
+<form method="POST">
+    <input type="hidden" name="container_no" value="{{ data.container_no }}">
+
+    Booking No:
+    <input type="text" name="booking_no"><br><br>
+
+    Customer:
+    <input type="text" name="customer_name"><br><br>
+
+    <button type="submit">Xác nhận xuất</button>
+</form>
+{% endif %}
+
+</body>
+</html>

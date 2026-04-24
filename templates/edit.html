@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nhập Container</title>
+</head>
+<body>
+    <div>
+        <a href="/in">Nhập (IN)</a> |
+        <a href="/out">Xuất (OUT)</a> |
+        <a href="/list">Tồn bãi</a> |
+        <a href="/history">Xuất bãi</a> |
+        <a href="/logs">Log chỉnh sửa</a>
+       
+    </div>
+    <hr>
+    <h2>Sửa Container</h2>
+
+<form method="POST">
+    Container No:
+    <input type="text" value="{{ c.container_no }}" readonly><br><br>
+
+    Shipping Line:
+    <input type="text" name="shipping_line" value="{{ c.shipping_line }}"><br><br>
+
+    Size:
+    <input type="text" name="size" value="{{ c.size }}"><br><br>
+
+    Status:
+    <input type="text" name="status" value="{{ c.status }}"><br><br>
+
+    <button type="submit">Cập nhật</button>
+</form>
+</body>
+</html>

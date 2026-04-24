@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nhập Container</title>
+</head>
+<body>
+    <div>
+        <a href="/in">Nhập (IN)</a> |
+        <a href="/out">Xuất (OUT)</a> |
+        <a href="/list">Tồn bãi</a> |
+        <a href="/history">Xuất bãi</a> |
+        <a href="/logs">Log chỉnh sửa</a>
+       
+    </div>
+    <hr>
+    <h2>Nhập Container</h2>
+
+    <form method="POST">
+        Container No:
+<input name="container_no" value="{{ form.get('container_no','') }}" onblur="checkContainer()">
+<div id="check-msg"></div><br>
+
+{% if error_container %}
+    <div style="color:red">{{ error_container }}</div>
+{% endif %}
+
+Shipping Line:
+<select name="shipping_line">
+    <option value="">-- Chọn hãng tàu --</option>
+
+    {% for l in lines %}
+    <option value="{{ l.code }}"
+        {% if form.get('shipping_line') == l.code %}selected{% endif %}>
+        {{ l.name }} ({{ l.code }})
+    </option>
+    {% endfor %}
+</select>
+<br><br>
+
+Size:
+<input name="size" value="{{ form.get('size','') }}"><br><br>
+
+Status:
+<input name="status" value="{{ form.get('status','') }}"><br><br>
+
+Date In:
+<input type="date" name="date_in" value="{{ form.get('date_in', today) }}"><br><br>
+
+        <button type="submit">Lưu</button>
+        {% if error %}
+        <p style="color:red">{{ error }}</p>
+        {% endif %}
+    </form>
+
+<script>
+function isValidISO(container) {
+    // check basic: 4 chữ + 7 số
+    return /^[A-Z]{4}\d{7}$/.test(container)
+}
+
+async function checkContainer() {
+    let input = document.querySelector('[name="container_no"]')
+    let value = input.value.toUpperCase().trim()
+
+    let msg = document.getElementById('check-msg')
+
+    if (!value) {
+        msg.innerText = ""
+        return
+    }
+
+    // ❗ CHECK ISO trước
+    if (!isValidISO(value)) {
+        msg.innerText = "Sai định dạng container!"
+        msg.style.color = "red"
+        return
+    }
+
+    // ❗ CHECK TRÙNG
+    let res = await fetch(`/check_container?container_no=${value}`)
+    let data = await res.json()
+
+    if (data.exists) {
+        msg.innerText = "Container đã tồn bãi!"
+        msg.style.color = "red"
+    } else {
+        msg.innerText = "OK"
+        msg.style.color = "green"
+    }
+}
+</script>
+</body>
+</html>

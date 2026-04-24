@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lịch sử chỉnh sửa</title>
+</head>
+<body>
+
+    <div>
+        <a href="/in">Nhập (IN)</a> |
+        <a href="/out">Xuất (OUT)</a> |
+        <a href="/list">Tồn bãi</a> |
+        <a href="/history">Xuất bãi</a> |
+        <a href="/logs">Log chỉnh sửa</a>
+        
+    </div>
+    <hr>
+
+<h2>Lịch sử chỉnh sửa</h2>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Container</th>
+        <th>Action</th>
+        <th>Thay đổi</th>
+        <th>Time</th>
+    </tr>
+
+    {% for log in logs %}
+    <tr>
+        <td>{{ log.container_no }}</td>
+        <td>{{ log.action }}</td>
+        <td>
+            {% for k, v in (log.new_data | from_json).items() %}
+                <div><b>{{ k }}</b>: {{ v }}</div>
+            {% endfor %}
+        </td>
+        <td>{{ log.created_at }}</td>
+        
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>

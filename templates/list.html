@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title or 'Container App' }}</title>
+</head>
+<body>
+    <div>
+        <a href="/in">Nhập (IN)</a> |
+        <a href="/out">Xuất (OUT)</a> |
+        <a href="/list">Tồn bãi</a> |
+        <a href="/history">Xuất bãi</a> |
+        <a href="/logs">Log chỉnh sửa</a>
+        {% if title != 'Xuất bãi' %}
+            <a href="/export?q={{ q or '' }}&line={{ line or '' }}">
+            <button>Báo Cáo</button>
+            </a>
+        {% endif %}        
+        
+    </div>
+    <hr>
+    <h2>{{ title }}</h2>
+    <form method="GET">
+        Tìm Container:
+        <input type="text" name="q" value="{{ q if q else '' }}">
+
+        Hãng tàu:
+        <input list="lines" name="line" value="{{ line if line else '' }}">
+
+        <datalist id="lines">
+            {% for l in lines %}
+                <option value="{{ l }}">
+            {% endfor %}
+        </datalist>
+
+        <button type="submit">Tìm</button>
+    </form>
+
+    <br>
+    <table border="1">
+        <tr>
+            <th>Container No</th>
+            <th>Shipping Line</th>
+            <th>Size</th>
+            <th>Status</th>
+        <th>{{ date_column or 'Date In' }}</th>
+            <th>Số ngày</th>
+        {% if title != 'Xuất bãi' %}
+            <th>Action</th>
+        {% endif %}
+        </tr>
+
+        {% for c in containers %}
+        <tr>
+            <td>{{ c.container_no }}</td>
+            <td>{{ c.shipping_line }}</td>
+            <td>{{ c.size }}</td>
+            <td>{{ c.status }}</td>
+            <td>{{ c.date_in }}</td>
+            <td 
+                {% if c.days is number and c.days >= 15 %}
+                    style="background-color:red; color:white;"
+                {% elif c.days is number and c.days >= 7 %}
+                    style="background-color:orange;"
+                {% endif %}
+            >
+                {{ c.days }}
+            </td>
+            {% if title != 'Xuất bãi' %}
+            <td>
+                <a href="/edit/{{ c.id }}">
+                    <button>Sửa</button>
+                </a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
